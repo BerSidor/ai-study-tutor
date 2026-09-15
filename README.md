@@ -1,8 +1,8 @@
 # College Material — setup guide
 
-This folder is a tutoring system. Each course is a folder you open as its own **Cowork
-project**; the agent reads that folder's instructions on its own and runs a study session
-against the course's real materials.
+This folder is a tutoring system. Each course is a folder you open directly — in
+**Claude Code** (recommended) or a Cowork project — and the agent reads that folder's
+instructions on its own and runs a study session against the course's real materials.
 
 This README is the **setup checklist** — everything *you* have to do for it to work.
 For how the pieces are wired internally, see `SETUP-NOTES.md`. For how sessions are
@@ -59,31 +59,39 @@ cannot tell those from a new one on its own.
 so from inside one it can see neither its sibling courses nor the canonical `TUTOR.md`
 it needs to copy from.
 
-### 3. Create the Cowork project
+### 3. Start studying
 
-In Cowork, create a project pointed at the **course folder itself** —
-`C:\Users\berna\College Material\COP3540`, not the parent.
-
-Leave the project's **Instructions** field empty. Cowork auto-loads `CLAUDE.md` from the
-project folder and resolves its `@` imports, so the whole chain runs unassisted:
-
-```
-open project -> CLAUDE.md auto-read -> @TUTOR.md + @study_guide.md pulled in
-             -> session-start protocol runs
-```
-
-Repeat steps 1–3 per course.
+Repeat steps 1–2 per course, then study in **Claude Code**, not Cowork — see below for why.
 
 ---
 
 ## Studying
 
-Open the course's Cowork project and start the chat. That's the whole trigger — no slash
-command, no pasted prompt.
+**Use Claude Code, opened directly in the course folder**
+(`C:\Users\berna\College Material\COP3540`), not the parent folder. `CLAUDE.md` auto-loads
+and pulls in `@TUTOR.md` + `@study_guide.md`, so the whole chain runs unassisted — no slash
+command, no pasted prompt. Just start chatting.
 
-Start a **new chat for each session**. Progress is durable in `study_guide.md`, so a
-fresh chat loses nothing; long Cowork chats re-cache the context repeatedly and cost a
-lot. That is the reason this system exists.
+Start a **new chat for each session**. Progress is durable in `study_guide.md`, so a fresh
+chat loses nothing, and staying short keeps each session cheap.
+
+### Why Claude Code instead of Cowork
+
+This system was originally built and run through Cowork, with a project pointed at the
+course folder. It still works there — but Cowork re-injects its own system prompt on
+**every new session**, on top of everything this workflow already re-reads
+(`TUTOR.md` + `study_guide.md`). Since "cheap, short, resumable sessions" is the entire
+point of this setup (see `SETUP-NOTES.md`), that per-session overhead works against the
+goal. Plain Claude Code, opened in the course folder, does not carry that cost and produces
+the same session-start protocol and progress tracking — so it's now the primary way to run
+this.
+
+Cowork still works as an alternative if you prefer its UI:
+
+1. Create a Cowork project pointed at the **course folder itself**, not the parent.
+2. Leave the project's **Instructions** field empty — Cowork auto-loads `CLAUDE.md` the
+   same way Claude Code does.
+3. See **Known limitations** below for a Cowork-specific gap (hooks don't fire there).
 
 ### Health check on the opener
 
@@ -132,14 +140,19 @@ means rerun it.
 
 ## Known limitations
 
+These apply to the **Cowork alternative** only; Claude Code doesn't have either issue.
+
+- **Cowork re-injects its own system prompt every new session**, on top of what this
+  workflow already re-reads. That per-session cost is the main reason Claude Code is now
+  the recommended way to run this — see **Why Claude Code instead of Cowork** above.
 - **Hooks do not fire in Cowork.** SessionStart and other lifecycle hooks from
   `~/.claude/settings.json` or `.claude/settings.json` are not run — Cowork is built on
-  Claude Code but skips them (feature requests anthropics/claude-code #47993, #63360).
-  Open a course folder in Claude Code instead if you want one. A hook's ceiling is
-  detection anyway: it can flag a stale study guide, not rewrite the outline.
-- **CLAUDE.md auto-loading is observed, not documented.** Verified live in a CEN5035
-  session on 2026-09-09 with an empty Instructions field. If it ever stops working, put a
-  pointer — not a copy of the rules — into **Project → Instructions**:
+  Claude Code but skips them (feature requests anthropics/claude-code #47993, #63360). A
+  hook's ceiling is detection anyway: it can flag a stale study guide, not rewrite the
+  outline.
+- **CLAUDE.md auto-loading in Cowork is observed, not documented.** Verified live in a
+  CEN5035 session on 2026-09-09 with an empty Instructions field. If it ever stops
+  working, put a pointer — not a copy of the rules — into **Project → Instructions**:
 
   ```
   You are my tutor for CEN5035 — Principles of Software Engineering.

@@ -18,6 +18,22 @@ College Material\
 
 Past courses (`CEN3062C`, `COP3410C`, `CAP Labs`) are deliberately not set up.
 
+## Claude Code is the primary runtime, not Cowork
+
+This system was originally built and run through Cowork. It moved to Claude Code because
+**Cowork re-injects its own system prompt on every new session**, which is a real,
+recurring token cost stacked on top of everything this workflow already re-reads
+(`TUTOR.md` + `study_guide.md` at the start of every session). Since minimizing
+per-session overhead is this system's entire reason for existing — see **one topic per
+session** in `TUTOR.md` — that made Cowork the more expensive way to run something
+designed to be cheap.
+
+Opening the course folder directly in Claude Code produces the same
+`CLAUDE.md` auto-read -> `@TUTOR.md` + `@study_guide.md` -> session-start protocol chain,
+without that extra cost, and picks up SessionStart hooks as a bonus (see below). Cowork
+still works and is documented below as a fallback, but it is no longer the recommended
+path.
+
 ## Cowork behavior — confirmed 2026-09-09
 
 **Cowork auto-loads `CLAUDE.md` from the project folder and resolves its `@` imports.**
