@@ -1,0 +1,21 @@
+# This repo publishes the AI-tutor workflow itself (TUTOR.md, README.md,
+# SETUP-NOTES.md, sync-tutor.ps1, .claude/skills/new-course/, EXAMPLE101/).
+# Everything below is personal coursework and must never be published.
+
+# Real course folders (personal materials, notes, submissions, grades)
+/CAP Labs/
+/CAP4770/
+/CEN3062C/
+/CEN5035/
+/COP3410C/
+/COP3540/
+/COP3834/
+
+# Junk that can show up anywhere
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+venv/
+.vscode/
+*.db
+*.pyc
