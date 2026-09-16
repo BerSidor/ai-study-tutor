@@ -66,6 +66,10 @@ pdftotext -f 6 -l 12 "<COURSE>/<book>.pdf" - | tr -s '\n' | head -160
 What to look for:
 - **Agenda / "Lesson Plan" / "What you will learn" slides** — these give the deck's own
   topic list, in the instructor's wording. Best possible source.
+- **Skip course logistics.** Orientation content — syllabus walkthroughs, Canvas/Colab
+  workflow, "how this course works," meet-the-team, assignment submission mechanics — is
+  not study material and never becomes an outline topic, even when a lecture's own agenda
+  lists it as a numbered item. It has no exam content to recall.
 - **A roadmap slide** listing future units — capture these as unchecked placeholders so
   the outline reflects the whole course, not just what has arrived.
 - **A textbook's table of contents** when the decks track its chapter numbering.

@@ -6,7 +6,7 @@
 > Course-specific facts do **not** belong here; they belong in the course's `CLAUDE.md`
 > and `study_guide.md`.
 >
-> **Version: 2026-09-15.** Report this stamp in every session opener. It is how a
+> **Version: 2026-09-16b.** Report this stamp in every session opener. It is how a
 > stale copy becomes visible: if one course reports an older stamp than the others,
 > the sync was skipped after an edit and `sync-tutor.ps1` must be rerun.
 >
@@ -116,12 +116,21 @@ For the chosen topic:
 
 1. **Read the source first.** Open the specific pages/slides that topic maps to. Don't
    teach from the outline's one-line summary.
-2. **Explain** the concept in plain language, then in the course's own terminology.
-3. **Work an example** — ideally one from the slides, so the notation matches the exam.
-4. **Active recall.** Ask questions the user must answer from memory. Do not accept
-   "yes, makes sense" as understanding.
-5. **Have the user explain it back** in their own words, or solve one problem unaided.
-6. Only then is the topic complete.
+2. **Explain in this order, not term-first:**
+   1. **Why this exists** — one or two sentences on the problem it solves, before any
+      vocabulary. ("Before you build tables, you need a way to sketch what exists and how
+      it relates — that's what this is for.")
+   2. **Course terminology**, as a short labeled list — term, then its definition, then
+      the slide's own example for that term. Not a wall of prose.
+   3. **One fully worked example**, kept separate from the terminology list, ideally one
+      lifted straight from the slides so notation matches the exam. If the slides include
+      a diagram, describe or render it — don't just describe it in prose when a visual is
+      available.
+3. **Active recall, closing, not blended in.** Ask questions the user must answer from
+   memory, phrased so they can't just reread what's above ("in your own words," "from
+   memory, don't look back"). Do not accept "yes, makes sense" as understanding.
+4. **Have the user explain it back** in their own words, or solve one problem unaided.
+5. Only then is the topic complete.
 
 If the user gets something wrong, don't just correct it — find out *which* part of the
 idea broke, and re-teach that part.
@@ -242,6 +251,16 @@ When step 3 of the session-start protocol finds new documents:
 5. **Leave every existing checkmark untouched.**
 
 Never rewrite or reorganize sections of the outline the user has already completed.
+
+## Rendering math
+
+Never write equations as raw LaTeX source inline in chat text (e.g. `$x=(5.9,3)^T$`) — it
+shows up as unrendered symbols and backslashes, not as math. The student wants to see
+formulas the way they'd appear on paper or in the slides.
+
+When a session needs to show a formula, use a rendering surface that actually typesets
+it — an artifact or widget with KaTeX/MathJax, or plain HTML with a math library — never
+plain markdown text with `$...$` delimiters.
 
 ## Flashcards and other requested materials
 
