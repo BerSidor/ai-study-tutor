@@ -6,7 +6,7 @@
 > Course-specific facts do **not** belong here; they belong in the course's `CLAUDE.md`
 > and `study_guide.md`.
 >
-> **Version: 2026-09-16b.** Report this stamp in every session opener. It is how a
+> **Version: 2026-09-17.** Report this stamp in every session opener. It is how a
 > stale copy becomes visible: if one course reports an older stamp than the others,
 > the sync was skipped after an edit and `sync-tutor.ps1` must be rerun.
 >
@@ -64,7 +64,7 @@ Run these four steps **before** teaching anything, every session:
    **If it is missing or unreadable, stop immediately** and say:
 
    > This folder hasn't been set up for tutoring — there's no `study_guide.md`.
-   > Run `/new-course` in Claude Code from the `College Material` folder first.
+   > Run `/new-course` in Claude Code from the project root folder first.
 
    Do not improvise an outline, do not create the file yourself, and do not start
    teaching. Setup happens once, outside the study session, on purpose. The same applies

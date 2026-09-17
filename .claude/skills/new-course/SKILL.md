@@ -1,13 +1,14 @@
 ---
 name: new-course
-description: Set up a new course folder in College Material for studying in Cowork - detects unscaffolded folders, derives a topic outline from the course materials, and writes CLAUDE.md, study_guide.md and the TUTOR.md copy. Use when a new course folder has been added, or the user asks to add/set up/prepare a course.
+description: Set up a new course folder in the current project for studying in Cowork - detects unscaffolded folders, derives a topic outline from the course materials, and writes CLAUDE.md, study_guide.md and the TUTOR.md copy. Use when a new course folder has been added, or the user asks to add/set up/prepare a course.
 ---
 
 # Set up a new course folder
 
-Prepares one folder under `C:\Users\berna\College Material\` so it can be opened as a
-Cowork project and tutored. Run this from the `College Material` root — a Cowork project
-scoped to a single course folder cannot see siblings or the parent's TUTOR.md.
+Prepares one course folder inside the directory Claude Code is currently running in,
+so it can be opened as a Cowork project and tutored. Run this from that root directory —
+a Cowork project scoped to a single course folder cannot see siblings or the parent's
+TUTOR.md.
 
 Read `SETUP-NOTES.md` in the root first; it documents how the pieces fit together.
 
@@ -16,7 +17,7 @@ Read `SETUP-NOTES.md` in the root first; it documents how the pieces fit togethe
 ```
 <COURSE>\
   CLAUDE.md       <- course-specific; imports @TUTOR.md and @study_guide.md
-  TUTOR.md        <- plain copy of College Material\TUTOR.md (kept current by sync-tutor.ps1)
+  TUTOR.md        <- plain copy of the root TUTOR.md (kept current by sync-tutor.ps1)
   study_guide.md  <- Source Documents manifest + checkbox topic outline
   <the course materials, untouched>
 ```
@@ -28,7 +29,6 @@ Read `SETUP-NOTES.md` in the root first; it documents how the pieces fit togethe
 If the user named a folder, use it. Otherwise list candidates:
 
 ```bash
-cd "C:/Users/berna/College Material"
 for d in */; do d="${d%/}"; [ "$d" = ".claude" ] && continue
   [ -f "$d/study_guide.md" ] || echo "UNSCAFFOLDED: $d"; done
 ```
@@ -146,12 +146,13 @@ Keep it short and course-specific. Tutoring behaviour belongs in `TUTOR.md`, nev
 
 ## Step 5 — Copy `TUTOR.md` and register the course
 
-Add `"<COURSE>"` to the `$courses` array in `College Material\sync-tutor.ps1`, then run
-it — it copies the canonical `TUTOR.md` into every listed course, the new one included.
-Do not hardlink: Cowork's file bridge refuses to read hardlinked files.
+Run `sync-tutor.ps1` from the project root — it auto-detects every course folder
+(any folder containing a `study_guide.md`) and copies the canonical `TUTOR.md` into
+each one, the new one included. Do not hardlink: Cowork's file bridge refuses to
+read hardlinked files.
 
 ```powershell
-& "C:\Users\berna\College Material\sync-tutor.ps1"
+& "./sync-tutor.ps1"
 ```
 
 ## Step 6 — Verify

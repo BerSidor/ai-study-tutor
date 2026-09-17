@@ -1,4 +1,4 @@
-# College Material — setup guide
+# Course Tutor — setup guide
 
 This folder is a tutoring system. Each course is a folder you open directly — in
 **Claude Code** (recommended) or a Cowork project — and the agent reads that folder's
@@ -12,7 +12,7 @@ actually run, see `TUTOR.md`.
 
 ## What has to exist
 
-At the root of `College Material\`:
+At the root of the project folder:
 
 | Item | Purpose |
 |---|---|
@@ -40,11 +40,11 @@ Deliberately not set up: `CEN3062C`, `COP3410C`, `CAP Labs` — past courses, le
 
 ### 1. Add a course
 
-Drop the course's materials into a new folder under `College Material\`.
+Drop the course's materials into a new folder under the project root.
 
 ### 2. Scaffold it
 
-Open **Claude Code** (not Cowork) in `College Material\` and run:
+Open **Claude Code** (not Cowork) in the project root and run:
 
 ```
 /new-course
@@ -68,7 +68,7 @@ Repeat steps 1–2 per course, then study in **Claude Code**, not Cowork — see
 ## Studying
 
 **Use Claude Code, opened directly in the course folder**
-(`C:\Users\berna\College Material\COP3540`), not the parent folder. `CLAUDE.md` auto-loads
+(e.g. `<project root>\COP3540`), not the parent folder. `CLAUDE.md` auto-loads
 and pulls in `@TUTOR.md` + `@study_guide.md`, so the whole chain runs unassisted — no slash
 command, no pasted prompt. Just start chatting.
 
@@ -121,7 +121,7 @@ The root `TUTOR.md` is canonical; each course folder has a **plain copy**. Edit 
 one (any tool), then push it out:
 
 ```powershell
-& "C:\Users\berna\College Material\sync-tutor.ps1"
+& "./sync-tutor.ps1"
 ```
 
 (They used to be hardlinks. Cowork's file bridge stopped reading hardlinked files in

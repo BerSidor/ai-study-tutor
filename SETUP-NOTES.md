@@ -3,7 +3,7 @@
 ## Structure
 
 ```
-College Material\
+<project root>\
   TUTOR.md          <- canonical tutor instructions
   README.md         <- setup checklist (what the user has to do)
   SETUP-NOTES.md    <- this file
@@ -115,7 +115,7 @@ expose. Repair by running the sync.
 Sync and verify after any edit:
 
 ```powershell
-& "C:\Users\berna\College Material\sync-tutor.ps1"
+& "./sync-tutor.ps1"
 ```
 
 It prints one `synced (<stamp>)` line per course after a hash comparison. `MISMATCH`
@@ -144,7 +144,7 @@ actually go wrong.
 5. **Sync the copies.**
 
    ```powershell
-   & "C:\Users\berna\College Material\sync-tutor.ps1"
+   & "./sync-tutor.ps1"
    ```
 
    Expect `synced (<new stamp>)` for every course. Skipping this step is the failure
@@ -161,7 +161,8 @@ actually go wrong.
 Drop the materials into a new folder here, then run **`/new-course`** in Claude Code from
 this directory. The skill (`.claude/skills/new-course/`) surveys the materials, derives a
 topic outline from the documents themselves, and writes `CLAUDE.md`, `study_guide.md` and
-the `TUTOR.md` copy (and adds the course to `sync-tutor.ps1`).
+the `TUTOR.md` copy. `sync-tutor.ps1` auto-detects the new course (any folder with a
+`study_guide.md`), so nothing needs to be registered manually.
 
 It asks for confirmation before touching any folder — several folders here are past
 courses that must stay untouched, and it cannot tell those from a new one on its own.
