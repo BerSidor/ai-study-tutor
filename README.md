@@ -31,8 +31,9 @@ Inside **each active course folder**:
 | `study_guide.md` | source-document manifest + progress count + checkbox outline |
 | `generated\` | everything the agent produces (created on first use) |
 
-Currently set up: **COP3540**, **CEN5035**, **CAP4770**.
-Deliberately not set up: `CEN3062C`, `COP3410C`, `CAP Labs` — past courses, leave alone.
+Past or inactive course folders should be left alone — the `/new-course` skill
+always confirms with you before touching an unscaffolded folder, so it won't
+mistake one for a course you're currently taking.
 
 ---
 
@@ -68,7 +69,7 @@ Repeat steps 1–2 per course, then study in **Claude Code**, not Cowork — see
 ## Studying
 
 **Use Claude Code, opened directly in the course folder**
-(e.g. `<project root>\COP3540`), not the parent folder. `CLAUDE.md` auto-loads
+(e.g. `<project root>\EXAMPLE101`), not the parent folder. `CLAUDE.md` auto-loads
 and pulls in `@TUTOR.md` + `@study_guide.md`, so the whole chain runs unassisted — no slash
 command, no pasted prompt. Just start chatting.
 
@@ -98,7 +99,7 @@ Cowork still works as an alternative if you prefer its UI:
 A correct session opens with a line like:
 
 ```
-COP3540 — 4/31 complete · tutor 2026-09-10. Next up: 1.4 Levels of abstraction...
+EXAMPLE101 — 4/31 complete · tutor 2026-09-10. Next up: 1.4 Levels of abstraction...
 ```
 
 | Symptom | Meaning | Fix |
@@ -151,11 +152,11 @@ These apply to the **Cowork alternative** only; Claude Code doesn't have either 
   hook's ceiling is detection anyway: it can flag a stale study guide, not rewrite the
   outline.
 - **CLAUDE.md auto-loading in Cowork is observed, not documented.** Verified live in a
-  CEN5035 session on 2026-09-09 with an empty Instructions field. If it ever stops
+  course session with an empty Instructions field. If it ever stops
   working, put a pointer — not a copy of the rules — into **Project → Instructions**:
 
   ```
-  You are my tutor for CEN5035 — Principles of Software Engineering.
+  You are my tutor for <COURSE CODE> — <Course Name>.
   Read TUTOR.md in the project folder and follow it for the whole session.
   Start by running its session-start protocol before anything else.
   ```

@@ -6,7 +6,7 @@
 > Course-specific facts do **not** belong here; they belong in the course's `CLAUDE.md`
 > and `study_guide.md`.
 >
-> **Version: 2026-09-17.** Report this stamp in every session opener. It is how a
+> **Version: 2026-09-17b.** Report this stamp in every session opener. It is how a
 > stale copy becomes visible: if one course reports an older stamp than the others,
 > the sync was skipped after an edit and `sync-tutor.ps1` must be rerun.
 >
@@ -102,7 +102,7 @@ Run these four steps **before** teaching anything, every session:
    derived, move it under `generated\` instead of listing it.
 4. **Report progress and propose a topic**, including this file's version date:
 
-   > COP3540 — 4/31 complete · tutor 2026-09-15. Next up: **2.4 Keys**. Ready?
+   > EXAMPLE101 — 4/31 complete · tutor 2026-09-15. Next up: **2.4 Keys**. Ready?
 
 Keep this opening short. It is the cheapest part of the session; don't pad it.
 

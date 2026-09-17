@@ -33,10 +33,10 @@ for d in */; do d="${d%/}"; [ "$d" = ".claude" ] && continue
   [ -f "$d/study_guide.md" ] || echo "UNSCAFFOLDED: $d"; done
 ```
 
-**Then stop and confirm with the user before touching anything.** Several folders here
-are past courses that must stay untouched (as of 2026-09-09: `CEN3062C`, `COP3410C`,
-`CAP Labs`). An unscaffolded folder is not automatically a course the user is taking. Ask:
-is this a current course you want to study?
+**Then stop and confirm with the user before touching anything.** Some folders here
+may be past or inactive courses that must stay untouched. An unscaffolded folder is
+not automatically a course the user is taking. Ask: is this a current course you
+want to study?
 
 If more than one candidate appears, ask which — set up one course per invocation.
 

@@ -9,14 +9,14 @@
   SETUP-NOTES.md    <- this file
   sync-tutor.ps1    <- copies TUTOR.md into every active course folder
   .claude\skills\new-course\   <- the /new-course scaffolding skill
-  COP3540\ CEN5035\ CAP4770\
+  <COURSE>\
     CLAUDE.md       <- course-specific; imports @TUTOR.md and @study_guide.md
     TUTOR.md        <- plain copy of the canonical file (kept current by sync-tutor.ps1)
     study_guide.md  <- Source Documents manifest + Progress count + checkbox outline
     generated\      <- everything the agent creates (created on first use)
 ```
 
-Past courses (`CEN3062C`, `COP3410C`, `CAP Labs`) are deliberately not set up.
+Past or inactive course folders are deliberately not set up.
 
 ## Claude Code is the primary runtime, not Cowork
 
@@ -37,7 +37,7 @@ path.
 ## Cowork behavior — confirmed 2026-09-09
 
 **Cowork auto-loads `CLAUDE.md` from the project folder and resolves its `@` imports.**
-Verified in a live CEN5035 session with nothing pasted into the project's Instructions
+Verified in a live course session with nothing pasted into the project's Instructions
 field: the agent opened with the correct progress line, ran the staleness check, and used
 phrasing (`Next up`) that appears only in `TUTOR.md`.
 
@@ -58,7 +58,7 @@ see the fallback below.
 A session should open with a line like:
 
 ```
-CEN5035 — 0/16 complete · tutor 2026-09-10. Next up: 0.1 Course structure...
+EXAMPLE101 — 0/16 complete · tutor 2026-09-10. Next up: 0.1 Course structure...
 ```
 
 - **No progress line** = the startup protocol was skipped. Say "run your startup steps."
@@ -73,7 +73,7 @@ detection scheme depends on the date changing when the content changes.
 Paste this into **Project → Instructions**, changing the course name and prefix:
 
 ```
-You are my tutor for CEN5035 — Principles of Software Engineering.
+You are my tutor for <COURSE CODE> — <Course Name>.
 Read TUTOR.md in the project folder and follow it for the whole session.
 Start by running its session-start protocol before anything else.
 ```
