@@ -1,14 +1,14 @@
 ---
 name: new-course
-description: Set up a new course folder in the current project for studying in Cowork - detects unscaffolded folders, derives a topic outline from the course materials, and writes CLAUDE.md, study_guide.md and the TUTOR.md copy. Use when a new course folder has been added, or the user asks to add/set up/prepare a course.
+description: Set up one or more new course folders in the current project for studying in Claude Code - detects unscaffolded folders, lets the user pick which are current courses, derives a topic outline from each course's materials, and writes CLAUDE.md, study_guide.md and the TUTOR.md copy. Use when course folders have been added, or the user asks to add/set up/prepare a course.
 ---
 
-# Set up a new course folder
+# Set up new course folders
 
-Prepares one course folder inside the directory Claude Code is currently running in,
-so it can be opened as a Cowork project and tutored. Run this from that root directory —
-a Cowork project scoped to a single course folder cannot see siblings or the parent's
-TUTOR.md.
+Prepares one or more course folders inside the directory Claude Code is currently
+running in, so each can be opened directly in Claude Code and tutored. Run this from
+that root directory — Claude Code opened inside a single course folder cannot see
+siblings or the parent's TUTOR.md.
 
 Read `SETUP-NOTES.md` in the root first; it documents how the pieces fit together.
 
@@ -24,9 +24,9 @@ Read `SETUP-NOTES.md` in the root first; it documents how the pieces fit togethe
 
 `generated\` is not created here — the tutor makes it on first use.
 
-## Step 1 — Identify the folder
+## Step 1 — Identify the folders
 
-If the user named a folder, use it. Otherwise list candidates:
+If the user named folders, use those. Otherwise list candidates:
 
 ```bash
 for d in */; do d="${d%/}"; [ "$d" = ".claude" ] && continue
@@ -35,10 +35,11 @@ for d in */; do d="${d%/}"; [ "$d" = ".claude" ] && continue
 
 **Then stop and confirm with the user before touching anything.** Some folders here
 may be past or inactive courses that must stay untouched. An unscaffolded folder is
-not automatically a course the user is taking. Ask: is this a current course you
-want to study?
+not automatically a course the user is taking. Show the list and ask which of them
+(any subset, including all) are current courses to set up.
 
-If more than one candidate appears, ask which — set up one course per invocation.
+Then run Steps 2–4 for each confirmed folder, one folder at a time, in the order given.
+Finish a folder completely before starting the next. Steps 5–7 run once at the end.
 
 ## Step 2 — Survey the materials
 
@@ -144,12 +145,13 @@ Course specifics worth knowing:
 
 Keep it short and course-specific. Tutoring behaviour belongs in `TUTOR.md`, never here.
 
-## Step 5 — Copy `TUTOR.md` and register the course
+## Step 5 — Copy `TUTOR.md` and register the courses
 
-Run `sync-tutor.ps1` from the project root — it auto-detects every course folder
+Once every confirmed folder has its `study_guide.md` and `CLAUDE.md`, run
+`sync-tutor.ps1` from the project root **once** — it auto-detects every course folder
 (any folder containing a `study_guide.md`) and copies the canonical `TUTOR.md` into
-each one, the new one included. Do not hardlink: Cowork's file bridge refuses to
-read hardlinked files.
+each one, the new ones included. Do not hardlink: Cowork's file bridge (the
+alternative runtime) refuses to read hardlinked files.
 
 ```powershell
 & "./sync-tutor.ps1"
@@ -157,20 +159,25 @@ read hardlinked files.
 
 ## Step 6 — Verify
 
-The sync output should show `synced (<stamp>)` for the new course. Also check:
+The sync output should show `synced (<stamp>)` for each new course. For each one also
+check:
 
 - `grep -c '^- \[ \]' <COURSE>/study_guide.md` matches the `## Progress` denominator.
 - `<COURSE>` contains exactly `CLAUDE.md`, `TUTOR.md`, `study_guide.md` and the materials.
 
 ## Step 7 — Report
 
-Tell the user the topic count, what the outline was derived from, and anything you were
-unsure about (a deck with no agenda slide, an empty subfolder, a document you could not
-classify). Then: open a Cowork project scoped to that folder — the session should open
-with `<CODE> — 0 / N topics complete. Next: <topic>.`
+For each course, tell the user the topic count, what the outline was derived from, and
+anything you were unsure about (a deck with no agenda slide, an empty subfolder, a
+document you could not classify).
 
-Nothing needs pasting into Cowork's Instructions field; `CLAUDE.md` is auto-loaded and its
-`@` imports resolve.
+Then tell them how to study: open a **new** Claude Code session inside one course folder
+(`cd <COURSE>` then `claude`), not the repo root, so the other courses stay out of
+context. The session should open with
+`<CODE> — 0/N complete · tutor <stamp>. Next up: <topic>. Ready?`
+
+Nothing needs pasting or prompting; `CLAUDE.md` is auto-loaded and its `@` imports
+resolve. (Cowork works too, with a project scoped to the course folder — see README.)
 
 ## Cautions
 

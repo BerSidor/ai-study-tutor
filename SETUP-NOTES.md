@@ -159,13 +159,17 @@ actually go wrong.
 ## Adding a course later
 
 Drop the materials into a new folder here, then run **`/new-course`** in Claude Code from
-this directory. The skill (`.claude/skills/new-course/`) surveys the materials, derives a
-topic outline from the documents themselves, and writes `CLAUDE.md`, `study_guide.md` and
-the `TUTOR.md` copy. `sync-tutor.ps1` auto-detects the new course (any folder with a
-`study_guide.md`), so nothing needs to be registered manually.
+this directory. The skill (`.claude/skills/new-course/`) lists every unscaffolded folder,
+asks which ones (any number) are current courses, then for each surveys the materials,
+derives a topic outline from the documents themselves, and writes `CLAUDE.md`,
+`study_guide.md` and the `TUTOR.md` copy. `sync-tutor.ps1` auto-detects the new courses
+(any folder with a `study_guide.md`), so nothing needs to be registered manually.
 
 It asks for confirmation before touching any folder — several folders here are past
 courses that must stay untouched, and it cannot tell those from a new one on its own.
+
+Studying is then one Claude Code session per course, opened inside that course folder so
+siblings stay out of context — see **Quick start** in `README.md`.
 
 Run it from Claude Code, not Cowork: a Cowork project is scoped to a single course folder,
 so it can see neither its siblings nor the canonical `TUTOR.md` it needs to copy.

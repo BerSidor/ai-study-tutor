@@ -10,6 +10,72 @@ actually run, see `TUTOR.md`.
 
 ---
 
+## Quick start
+
+The whole setup is two Claude Code sessions: one at the repo root to scaffold, then one
+per course to study.
+
+**1. Clone the repo.** Open a terminal (or Claude Code with no folder) and:
+
+```
+git clone <repo-url>
+cd <repo>
+```
+
+**2. Add your courses.** Inside the repo, make one top-level folder per course and drop
+that course's materials into it — slides, PDFs, notebooks, whatever the instructor gave
+you:
+
+```
+<repo>\
+  COP3540\   <- your files
+  CEN5035\   <- your files
+  EXAMPLE101\   <- shipped with the repo; a finished example you can compare against
+```
+
+Course folders are gitignored, so nothing personal is ever pushed.
+
+**3. Scaffold them.** Start Claude Code **from the repo root** and run the skill:
+
+```
+claude
+/new-course
+```
+
+It lists every unscaffolded folder and asks which ones are courses you're taking — pick
+all of them. For each one it reads the materials, derives a topic outline, and writes the
+three files a course needs (`CLAUDE.md`, `study_guide.md`, `TUTOR.md`). Exit when it
+reports done.
+
+**4. Study — one session per course.** Open a **new** Claude Code session inside the
+course folder, not the repo root:
+
+```
+cd COP3540
+claude
+```
+
+Claude Code only reads the folder it's opened in, so sibling courses stay out of context
+and out of the bill. The course's `CLAUDE.md` auto-loads and pulls in `TUTOR.md` and
+`study_guide.md`; nothing to paste, no slash command. Just start chatting.
+
+**5. Check the opener.** A working session begins with the tutor's standard progress
+line:
+
+```
+COP3540 — 4/31 complete · tutor 2026-09-15. Next up: **2.4 Keys**. Ready?
+```
+
+If that line doesn't appear, say "run your startup steps". If the `tutor` date is older
+than in your other courses, run `sync-tutor.ps1` from the root (see **Maintenance**).
+
+Start a **new chat for each session** — progress lives in `study_guide.md`, so a fresh
+chat loses nothing and stays cheap.
+
+Everything below is reference detail for the steps above.
+
+---
+
 ## What has to exist
 
 At the root of the project folder:
@@ -37,44 +103,20 @@ mistake one for a course you're currently taking.
 
 ---
 
-## One-time setup
+## About `/new-course`
 
-### 1. Add a course
+The skill lives in `.claude\skills\new-course\`. It must run from the **repo root** in
+Claude Code — from inside a course folder it can see neither its siblings nor the
+canonical `TUTOR.md` it needs to copy. It asks for confirmation before touching any
+folder, because a folder of old materials from a past semester looks the same as a new
+course, and it never modifies your materials — it only adds the three files.
 
-Drop the course's materials into a new folder under the project root.
-
-### 2. Scaffold it
-
-Open **Claude Code** (not Cowork) in the project root and run:
-
-```
-/new-course
-```
-
-The skill surveys the materials, derives a topic outline from the documents themselves,
-and writes `CLAUDE.md`, `study_guide.md` and the `TUTOR.md` copy. It asks for
-confirmation before touching any folder — several folders here are past courses and it
-cannot tell those from a new one on its own.
-
-**Why Claude Code and not Cowork:** a Cowork project is scoped to a single course folder,
-so from inside one it can see neither its sibling courses nor the canonical `TUTOR.md`
-it needs to copy from.
-
-### 3. Start studying
-
-Repeat steps 1–2 per course, then study in **Claude Code**, not Cowork — see below for why.
+Adding a course mid-semester is the same: make the folder, run `/new-course` from the
+root, pick it.
 
 ---
 
 ## Studying
-
-**Use Claude Code, opened directly in the course folder**
-(e.g. `<project root>\EXAMPLE101`), not the parent folder. `CLAUDE.md` auto-loads
-and pulls in `@TUTOR.md` + `@study_guide.md`, so the whole chain runs unassisted — no slash
-command, no pasted prompt. Just start chatting.
-
-Start a **new chat for each session**. Progress is durable in `study_guide.md`, so a fresh
-chat loses nothing, and staying short keeps each session cheap.
 
 ### Why Claude Code instead of Cowork
 
@@ -99,7 +141,7 @@ Cowork still works as an alternative if you prefer its UI:
 A correct session opens with a line like:
 
 ```
-EXAMPLE101 — 4/31 complete · tutor 2026-09-10. Next up: 1.4 Levels of abstraction...
+EXAMPLE101 — 4/31 complete · tutor 2026-09-15. Next up: **2.4 Keys**. Ready?
 ```
 
 | Symptom | Meaning | Fix |
